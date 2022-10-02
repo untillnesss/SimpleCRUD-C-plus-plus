@@ -90,8 +90,9 @@ int main()
         // FindItemFromList();
         // break;
     case 4:
-        // AddIteminStock();
-        // break;
+        deleteData(con, pstmt, result);
+        main();
+        break;
     case 5:
         // UpdateStockItem();
         // break;

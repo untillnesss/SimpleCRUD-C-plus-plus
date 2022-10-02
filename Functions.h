@@ -60,6 +60,7 @@ void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt, sql::Resu
 
     cout << "Masukkan Kelas Siswa: ";
     getline(cin, kelas);
+    getline(cin, kelas);
 
     cout << "Masukkan Alamat Siswa: ";
     getline(cin, alamat);
@@ -72,7 +73,8 @@ void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt, sql::Resu
     pstmt->setString(1, npm);
     result = pstmt->executeQuery();
 
-    if(result->rowsCount() > 0){
+    if (result->rowsCount() > 0)
+    {
         newLine();
         cout << "== NPM sudah tersedia, silahkan coba lagi" << endl;
         newLine();
@@ -120,6 +122,37 @@ void listData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::ResultSe
     }
 
     separator();
+    cout << "Tekan sembarang untuk ke Menu Utama, ";
+    system("pause");
+}
+
+void deleteData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::ResultSet *result)
+{
+    string npm = "";
+
+    cout << "Masukkan NPM siswa yang ingin di hapus: ";
+    getline(cin, npm);
+    getline(cin, npm);
+
+    pstmt = con->prepareStatement("SELECT * FROM students WHERE npm = ?;");
+    pstmt->setString(1, npm);
+    result = pstmt->executeQuery();
+
+    if (result->rowsCount() == 0)
+    {
+        newLine();
+        cout << "== Siswa dengan NPM " << npm << " tidak ada, silahkan coba lagi" << endl;
+        newLine();
+        cout << "Tekan sembarang untuk ke Menu Utama, ";
+        system("pause");
+        return;
+    }
+
+    pstmt = con->prepareStatement("DELETE FROM students WHERE npm = ?;");
+    pstmt->setString(1, npm);
+    result = pstmt->executeQuery();
+    separator();
+    cout << "== Berhasil menghapus data siswa" << endl;
     cout << "Tekan sembarang untuk ke Menu Utama, ";
     system("pause");
 }
