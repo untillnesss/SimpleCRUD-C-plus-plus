@@ -60,7 +60,6 @@ void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt, sql::Resu
 
     cout << "Masukkan Kelas Siswa: ";
     getline(cin, kelas);
-    getline(cin, kelas);
 
     cout << "Masukkan Alamat Siswa: ";
     getline(cin, alamat);
@@ -91,8 +90,9 @@ void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt, sql::Resu
     pstmt->execute();
 
     newLine();
+    separator();
     cout << "== Berhasil menambahkan siswa baru" << endl;
-    newLine();
+    separator();
     cout << "Tekan sembarang untuk ke Menu Utama, ";
     system("pause");
 }
@@ -153,6 +153,7 @@ void deleteData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::Result
     result = pstmt->executeQuery();
     separator();
     cout << "== Berhasil menghapus data siswa" << endl;
+    separator();
     cout << "Tekan sembarang untuk ke Menu Utama, ";
     system("pause");
 }
