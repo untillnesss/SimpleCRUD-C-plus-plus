@@ -83,7 +83,7 @@ int main()
         main();
         break;
     case 2:
-        storeStudent(con, pstmt);
+        storeStudent(con, pstmt, result);
         main();
         break;
     case 3:

@@ -38,7 +38,7 @@ void separator()
     garisSamaDengan(100, true);
 }
 
-void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt)
+void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt, sql::ResultSet *result)
 {
 
     string npm = "";
@@ -67,6 +67,19 @@ void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt)
 
     cout << "Proses menambahkan siswa ...";
     newLine();
+
+    pstmt = con->prepareStatement("SELECT * FROM students WHERE npm = ?;");
+    pstmt->setString(1, npm);
+    result = pstmt->executeQuery();
+
+    if(result->rowsCount() > 0){
+        newLine();
+        cout << "== NPM sudah tersedia, silahkan coba lagi" << endl;
+        newLine();
+        cout << "Tekan sembarang untuk ke Menu Utama, ";
+        system("pause");
+        return;
+    }
 
     pstmt = con->prepareStatement("INSERT INTO students(npm, name, kelas, address) VALUES(?,?,?,?)");
     pstmt->setString(1, npm);
