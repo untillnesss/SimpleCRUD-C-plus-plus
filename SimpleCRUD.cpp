@@ -41,39 +41,42 @@ int main()
         exit(1);
     }
 
-    // please create database "quickstartdb" ahead of time
     con->setSchema("submission_1_c_plus_plus");
 
     clearScreen();
     cout << "Hello :)" << endl;
 
-    // Variables
     int chooseOneFromMenu = 0;
     char exitSurity;
     int num = 1;
     int fin = 0;
-    // Variables End
 
     welcomeMessage();
-    for (int i = 0; i < 1; i++)
-    {
-        fin = num;
-        cout << fin << ". Lihat semua daftar Siswa" << endl; // 1
-        fin += num;
-        cout << fin << ". Tambah data Siswa baru" << endl; // 2
-        fin += num;
-        cout << fin << ". Ubah data Siswa" << endl; // 3
-        fin += num;
-        cout << fin << ". Hapus data Siswa" << endl; // 4
-        fin += num;
-        cout << fin << ". Tambah Nilai Siswa" << endl; // 5
-        fin += num;
-        cout << fin << ". Lihat Detail Siswa" << endl; // 6
-        fin += num;
-        cout << fin << ". Keluar Aplikasi" << endl; // 7
-        garisSamaDengan(70, true);
-        cout << "Pilih menu 1-7: ";
-    }
+
+    fin = num;
+    cout << fin << ". Lihat semua daftar Siswa" << endl; // 1
+
+    fin += num;
+    cout << fin << ". Tambah data Siswa baru" << endl; // 2
+
+    fin += num;
+    cout << fin << ". Ubah data Siswa" << endl; // 3
+
+    fin += num;
+    cout << fin << ". Hapus data Siswa" << endl; // 4
+
+    fin += num;
+    cout << fin << ". Tambah Nilai Siswa" << endl; // 5
+
+    fin += num;
+    cout << fin << ". Lihat Detail Siswa" << endl; // 6
+
+    fin += num;
+    cout << fin << ". Keluar Aplikasi" << endl; // 7
+
+    garisSamaDengan(70, true);
+
+    cout << "Pilih menu 1-7: ";
     cin >> chooseOneFromMenu;
 
     switch (chooseOneFromMenu)
