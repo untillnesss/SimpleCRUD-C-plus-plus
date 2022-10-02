@@ -22,7 +22,7 @@ void clearScreen()
 
 void welcomeMessage()
 {
-    cout << "Aplikasi Mahasiswa Sederhana Banget" << endl
+    cout << "Aplikasi Mahasiswa Sederhana Banget by: Muhammad Abdullah Sa'id" << endl
          << endl;
     cout << "== Menu Utama ";
     garisSamaDengan(100, true);

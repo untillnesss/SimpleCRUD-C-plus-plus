@@ -107,6 +107,7 @@ int main()
         break;
     case 7:
     ExitProgram:
+        newLine();
         cout << "Apakah anda yakin ingin keluar? (y/n): ";
         cin >> exitSurity;
         if (exitSurity == 'y' || exitSurity == 'Y')
