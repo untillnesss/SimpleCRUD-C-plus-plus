@@ -1,6 +1,8 @@
 {
     "files.associations": {
         ".env": "dotenv",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "istream": "cpp",
+        "string": "cpp"
     }
 }

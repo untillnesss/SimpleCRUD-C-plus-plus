@@ -82,6 +82,7 @@ int main()
         break;
     case 2:
         storeStudent(con, pstmt);
+        main();
         break;
     case 3:
         // FindItemFromList();
