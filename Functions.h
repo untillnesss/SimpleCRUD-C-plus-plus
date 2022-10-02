@@ -25,7 +25,7 @@ void welcomeMessage()
     cout << "Aplikasi Mahasiswa Sederhana Banget" << endl
          << endl;
     cout << "== Menu Utama ";
-    garisSamaDengan(70, true);
+    garisSamaDengan(100, true);
 }
 
 void newLine()
@@ -35,7 +35,7 @@ void newLine()
 
 void separator()
 {
-    garisSamaDengan(70, true);
+    garisSamaDengan(100, true);
 }
 
 void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt)
@@ -48,7 +48,7 @@ void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt)
 
     newLine();
     cout << "== Tambah data siswa baru ";
-    garisSamaDengan(70, true);
+    garisSamaDengan(100, true);
     newLine();
 
     cout << "Masukkan NPM Siswa: ";
@@ -91,13 +91,20 @@ void listData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::ResultSe
 
     newLine();
     cout << "== List Data Siswa ";
-    garisSamaDengan(70, true);
+    garisSamaDengan(100, true);
 
     printf(columnSize, "NPM", "Nama Siswa", "Kelas", "Alamat");
-    separator();
+    separator;
 
-    while (result->next())
-        printf(columnSize, result->getString(2).c_str(), result->getString(3).c_str(), result->getString(5).c_str(), result->getString(4).c_str());
+    if (result->rowsCount() == 0)
+    {
+        cout << "Data siswa kosong" << endl;
+    }
+    else
+    {
+        while (result->next())
+            printf(columnSize, result->getString(2).c_str(), result->getString(3).c_str(), result->getString(5).c_str(), result->getString(4).c_str());
+    }
 
     separator();
     cout << "Tekan sembarang untuk ke Menu Utama, ";
