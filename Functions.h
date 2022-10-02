@@ -87,7 +87,7 @@ void listData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::ResultSe
     pstmt = con->prepareStatement("SELECT * FROM students;");
     result = pstmt->executeQuery();
 
-    const char *columnSize = "| %-10s | %-20s | %-20s | %-30s |\n";
+    const char *columnSize = "| %-15s | %-35s | %-20s | %-50s |\n";
 
     newLine();
     cout << "== List Data Siswa ";
