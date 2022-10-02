@@ -281,7 +281,7 @@ void storeScoreData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::Re
     }
 
     while (result->next())
-    {   
+    {
         studentId = result->getString(1).c_str();
         newLine();
         separator();
@@ -309,4 +309,64 @@ void storeScoreData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::Re
     cout << "Tekan sembarang untuk ke Menu Utama, ";
     system("pause");
     return;
+}
+
+void showData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::ResultSet *result)
+{
+    string npm = "";
+    string studentId = "";
+
+    cout << "Masukkan NPM siswa: ";
+    getline(cin, npm);
+    getline(cin, npm);
+
+    pstmt = con->prepareStatement("SELECT * FROM students WHERE npm = ?;");
+    pstmt->setString(1, npm);
+    result = pstmt->executeQuery();
+
+    if (result->rowsCount() == 0)
+    {
+        newLine();
+        cout << "== Siswa dengan NPM " << npm << " tidak ada, silahkan coba lagi" << endl;
+        newLine();
+        cout << "Tekan sembarang untuk ke Menu Utama, ";
+        system("pause");
+        return;
+    }
+
+    while (result->next())
+    {
+        studentId = result->getString(1).c_str();
+        newLine();
+        cout << "== Detail Siswa ";
+        garisSamaDengan(100, true);
+        cout << "NPM: " << result->getString(2).c_str() << endl;
+        cout << "Nama Siswa: " << result->getString(3).c_str() << endl;
+        newLine();
+    }
+
+    pstmt = con->prepareStatement("SELECT * FROM scores WHERE student_id = ?;");
+    pstmt->setString(1, studentId);
+    result = pstmt->executeQuery();
+
+    const char *columnSize = "| %-30s | %-15s |\n";
+    cout << "== Daftar Nilai Siswa ";
+    garisSamaDengan(100, true);
+
+    printf(columnSize, "Nama Pelajaran", "Nilai");
+    separator();
+
+    if (result->rowsCount() == 0)
+    {
+        cout << "Data nilai kosong" << endl;
+    }
+    else
+    {
+        while (result->next())
+            printf(columnSize, result->getString(3).c_str(), result->getString(4).c_str());
+    }
+
+    separator();
+    cout << "Tekan sembarang untuk ke Menu Utama, ";
+    system("pause");
 }

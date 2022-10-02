@@ -102,8 +102,9 @@ int main()
         main();
         break;
     case 6:
-        // cout << "Masuk menu";
-        // break;
+        showData(con, pstmt, result);
+        main();
+        break;
     case 7:
     ExitProgram:
         cout << "Apakah anda yakin ingin keluar? (y/n): ";
