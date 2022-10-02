@@ -109,7 +109,7 @@ void listData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::ResultSe
     garisSamaDengan(100, true);
 
     printf(columnSize, "NPM", "Nama Siswa", "Kelas", "Alamat");
-    separator;
+    separator();
 
     if (result->rowsCount() == 0)
     {
@@ -253,4 +253,60 @@ void updateData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::Result
     separator();
     cout << "Tekan sembarang untuk ke Menu Utama, ";
     system("pause");
+}
+
+void storeScoreData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::ResultSet *result)
+{
+    string studentId = "";
+    string npm = "";
+    string pelajaran = "";
+    string score = "";
+
+    cout << "Masukkan NPM siswa : ";
+    getline(cin, npm);
+    getline(cin, npm);
+
+    pstmt = con->prepareStatement("SELECT * FROM students WHERE npm = ?;");
+    pstmt->setString(1, npm);
+    result = pstmt->executeQuery();
+
+    if (result->rowsCount() == 0)
+    {
+        newLine();
+        cout << "== Siswa dengan NPM " << npm << " tidak ada, silahkan coba lagi" << endl;
+        newLine();
+        cout << "Tekan sembarang untuk ke Menu Utama, ";
+        system("pause");
+        return;
+    }
+
+    while (result->next())
+    {   
+        studentId = result->getString(1).c_str();
+        newLine();
+        separator();
+        cout << "NPM: " << result->getString(2).c_str() << endl;
+        cout << "Nama Siswa: " << result->getString(3).c_str() << endl;
+        newLine();
+    }
+
+    cout << "Masukkan Nama Pelajaran: ";
+    getline(cin, pelajaran);
+
+    cout << "Masukkan Nilai: ";
+    getline(cin, score);
+
+    pstmt = con->prepareStatement("INSERT INTO scores(student_id, name, score) VALUES(?,?,?)");
+    pstmt->setString(1, studentId);
+    pstmt->setString(2, pelajaran);
+    pstmt->setString(3, score);
+    pstmt->execute();
+
+    newLine();
+    separator();
+    cout << "== Berhasil menambahkan nilai" << endl;
+    separator();
+    cout << "Tekan sembarang untuk ke Menu Utama, ";
+    system("pause");
+    return;
 }

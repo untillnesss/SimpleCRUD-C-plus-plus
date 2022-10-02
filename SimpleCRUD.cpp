@@ -95,11 +95,12 @@ int main()
         main();
         break;
     case 5:
-        // UpdateStockItem();
-        // break;
-    case 6:
-        cout << "Masuk menu";
+        storeScoreData(con, pstmt, result);
+        main();
         break;
+    case 6:
+        // cout << "Masuk menu";
+        // break;
     case 7:
     ExitProgram:
         cout << "Apakah anda yakin ingin keluar? (y/n): ";
