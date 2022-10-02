@@ -19,6 +19,7 @@ sql::Driver *driver;
 sql::Connection *con;
 sql::Statement *stmt;
 sql::PreparedStatement *pstmt;
+sql::ResultSet *result;
 
 void initConnectionMysql()
 {
@@ -69,8 +70,8 @@ int main()
         fin += num;
         cout << fin << ". Lihat Detail Siswa" << endl; // 6
         fin += num;
-        cout << fin << ". Exit" << endl; // 7
-        cout << "================================================" << endl;
+        cout << fin << ". Keluar Aplikasi" << endl; // 7
+        garisSamaDengan(70, true);
         cout << "Pilih menu 1-7: ";
     }
     cin >> chooseOneFromMenu;
@@ -78,7 +79,8 @@ int main()
     switch (chooseOneFromMenu)
     {
     case 1:
-        cout << "list all";
+        listData(con, pstmt, result);
+        main();
         break;
     case 2:
         storeStudent(con, pstmt);
@@ -98,11 +100,13 @@ int main()
         break;
     case 7:
     ExitProgram:
-        cout << "Program terminating. Are you sure? (y/n): ";
+        cout << "Apakah anda yakin ingin keluar? (y/n): ";
         cin >> exitSurity;
         if (exitSurity == 'y' || exitSurity == 'Y')
         {
             delete con;
+            delete pstmt;
+            delete result;
             return 0;
         }
         else if (exitSurity == 'n' || exitSurity == 'N')
@@ -112,12 +116,11 @@ int main()
         }
         else
         {
-            cout << "Next time choose after read the corresponding line." << endl;
             goto ExitProgram;
         }
         break;
     default:
-        cout << "Please choose between 1 - 7. Press Enter To Continue..." << endl;
+        cout << "Silahkan pilih angka 1-7. Tekan sembarang untuk melajutkan..." << endl;
         main();
         break;
     }

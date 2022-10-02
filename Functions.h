@@ -4,6 +4,17 @@
 
 using namespace std;
 
+void garisSamaDengan(int angka, bool withNewLine = false)
+{
+    for (size_t i = 0; i < angka; i++)
+    {
+        cout << "=";
+    }
+
+    if (withNewLine)
+        cout << endl;
+}
+
 void clearScreen()
 {
     system("cls");
@@ -13,12 +24,18 @@ void welcomeMessage()
 {
     cout << "Aplikasi Mahasiswa Sederhana Banget" << endl
          << endl;
-    cout << "== Menu Utama ==================================" << endl;
+    cout << "== Menu Utama ";
+    garisSamaDengan(70, true);
 }
 
 void newLine()
 {
     cout << endl;
+}
+
+void separator()
+{
+    garisSamaDengan(70, true);
 }
 
 void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt)
@@ -30,7 +47,8 @@ void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt)
     string alamat = "";
 
     newLine();
-    cout << "== Tambah data siswa baru ============================" << endl;
+    cout << "== Tambah data siswa baru ";
+    garisSamaDengan(70, true);
     newLine();
 
     cout << "Masukkan NPM Siswa: ";
@@ -60,6 +78,28 @@ void storeStudent(sql::Connection *con, sql::PreparedStatement *pstmt)
     newLine();
     cout << "== Berhasil menambahkan siswa baru" << endl;
     newLine();
+    cout << "Tekan sembarang untuk ke Menu Utama, ";
+    system("pause");
+}
+
+void listData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::ResultSet *result)
+{
+    pstmt = con->prepareStatement("SELECT * FROM students;");
+    result = pstmt->executeQuery();
+
+    const char *columnSize = "| %-10s | %-20s | %-20s | %-30s |\n";
+
+    newLine();
+    cout << "== List Data Siswa ";
+    garisSamaDengan(70, true);
+
+    printf(columnSize, "NPM", "Nama Siswa", "Kelas", "Alamat");
+    separator();
+
+    while (result->next())
+        printf(columnSize, result->getString(2).c_str(), result->getString(3).c_str(), result->getString(5).c_str(), result->getString(4).c_str());
+
+    separator();
     cout << "Tekan sembarang untuk ke Menu Utama, ";
     system("pause");
 }
