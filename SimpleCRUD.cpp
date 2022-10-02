@@ -87,8 +87,9 @@ int main()
         main();
         break;
     case 3:
-        // FindItemFromList();
-        // break;
+        updateData(con, pstmt, result);
+        main();
+        break;
     case 4:
         deleteData(con, pstmt, result);
         main();

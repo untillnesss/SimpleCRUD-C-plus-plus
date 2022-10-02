@@ -130,7 +130,7 @@ void deleteData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::Result
 {
     string npm = "";
 
-    cout << "Masukkan NPM siswa yang ingin di hapus: ";
+    cout << "Masukkan NPM siswa yang ingin dihapus: ";
     getline(cin, npm);
     getline(cin, npm);
 
@@ -153,6 +153,103 @@ void deleteData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::Result
     result = pstmt->executeQuery();
     separator();
     cout << "== Berhasil menghapus data siswa" << endl;
+    separator();
+    cout << "Tekan sembarang untuk ke Menu Utama, ";
+    system("pause");
+}
+
+void updateData(sql::Connection *con, sql::PreparedStatement *pstmt, sql::ResultSet *result)
+{
+    string npm = "";
+    string oldNpm = "";
+    string name = "";
+    string kelas = "";
+    string alamat = "";
+
+    cout << "Masukkan NPM siswa yang ingin diubah: ";
+    getline(cin, npm);
+    getline(cin, npm);
+
+    pstmt = con->prepareStatement("SELECT * FROM students WHERE npm = ?;");
+    pstmt->setString(1, npm);
+    result = pstmt->executeQuery();
+
+    if (result->rowsCount() == 0)
+    {
+        newLine();
+        cout << "== Siswa dengan NPM " << npm << " tidak ada, silahkan coba lagi" << endl;
+        newLine();
+        cout << "Tekan sembarang untuk ke Menu Utama, ";
+        system("pause");
+        return;
+    }
+
+    while (result->next())
+    {
+        oldNpm = result->getString(2).c_str();
+
+        newLine();
+        cout << "Masukkan NPM Siswa[" << result->getString(2).c_str() << "]: ";
+        getline(cin, npm);
+        if (npm == "")
+        {
+            npm = result->getString(2).c_str();
+        }
+
+        cout << "Masukkan Nama Siswa[" << result->getString(3).c_str() << "]: ";
+        getline(cin, name);
+        if (name == "")
+        {
+            name = result->getString(3).c_str();
+        }
+
+        cout << "Masukkan Kelas Siswa[" << result->getString(5).c_str() << "]: ";
+        getline(cin, kelas);
+        if (kelas == "")
+        {
+            kelas = result->getString(5).c_str();
+        }
+
+        cout << "Masukkan Alamat Siswa[" << result->getString(4).c_str() << "]: ";
+        getline(cin, alamat);
+        if (alamat == "")
+        {
+            alamat = result->getString(4).c_str();
+        }
+        newLine();
+
+        cout << "Proses mengubah siswa ...";
+        newLine();
+    }
+
+    if (oldNpm != npm)
+    {
+        pstmt = con->prepareStatement("SELECT * FROM students WHERE npm = ?;");
+        pstmt->setString(1, npm);
+        result = pstmt->executeQuery();
+
+        if (result->rowsCount() > 0)
+        {
+            newLine();
+            cout << "== NPM sudah tersedia, silahkan coba lagi" << endl;
+            newLine();
+            cout << "Tekan sembarang untuk ke Menu Utama, ";
+            system("pause");
+            return;
+        }
+    }
+
+    pstmt = con->prepareStatement("UPDATE students SET npm = ?, name = ?, kelas = ?, address = ? WHERE npm = ?");
+    pstmt->setString(1, npm);
+    pstmt->setString(2, name);
+    pstmt->setString(3, kelas);
+    pstmt->setString(4, alamat);
+    pstmt->setString(5, oldNpm);
+    pstmt->execute();
+
+    newLine();
+    separator();
+    cout << "== Berhasil mengubah siswa baru" << endl;
     separator();
     cout << "Tekan sembarang untuk ke Menu Utama, ";
     system("pause");
